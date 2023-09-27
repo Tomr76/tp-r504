@@ -6,9 +6,20 @@ def puissance (a, b) :
 	
 	i=0
 	puissance = a
-	for i in range (1,b):
-		puissance=puissance*a
-		i=i+1
+	
+	if b==0 : 
+		puissance =1
+	
+	elif a==0 and b<0 :
+		raise TypeError("Only not supported")
+	
+	elif b<0 :
+		puissance=1/a**-b
+		
+	else : 
+		for i in range (1,b):
+			puissance=puissance*a
+			i=i+1
 	return (puissance)
 	
 
