@@ -4,8 +4,11 @@ def puissance (a, b) :
 	if not type(b) is int:
 		raise TypeError("Only integers are allowed")
 	
-	puissance = a**b
-	
+	i=0
+	puissance = a
+	for i in range (1,b):
+		puissance=puissance*a
+		i=i+1
 	return (puissance)
 	
 
