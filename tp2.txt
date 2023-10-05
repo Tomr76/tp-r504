@@ -30,3 +30,7 @@ cette modification a été effectuée
 2.1) git status
 
 2.2) Le nom de la branche par défaut est "master".   
+
+2.5) Le fichier index.html n'est pas versionné. 
+
+2.6) Oui on peut voir le fichier index.html qui est versionné. 
