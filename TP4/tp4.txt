@@ -1,0 +1,13 @@
+TP4 : 
+
+2.1) docker stop $(docker ps -aq)
+     docker rm $(docker ps -aq) 
+
+2.2) docker stop $(docker ps -aq)
+     docker rm $(docker ps -aq)
+     docker network prune -f
+     docker volume prune -f
+
+2.3) docker network create --driver bridge net-tp4
+
+2.4)
