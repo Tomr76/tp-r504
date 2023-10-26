@@ -10,4 +10,5 @@ TP4 :
 
 2.3) docker network create --driver bridge net-tp4
 
-2.4)
+2.9) La taille de l'image Debian 11 est de 124MB
+La taille de notre image im-tp4 est de 795MB. 
