@@ -1,44 +1,63 @@
-// Import des bibliothèques nécessaires
-import java.io.IOException;
-import java.io.InputStreamReader;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
+import java.io.*;
+import javax.json.*;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.*;
+import org.apache.http.client.methods.*;
+import org.apache.http.impl.client.*;
 
 public class Client2 {
-
     public static void main(String[] args) {
-        // Q1.2 - Vérifier le nombre d'arguments
-        if (args.length == 0) {
-            System.err.println("Erreur : Veuillez spécifier l'URL du serveur en argument.");
+        // Vérification des arguments en ligne de commande
+        if (args.length < 1) {
+            System.err.println("Usage: java Client2 <hostname>");
             System.exit(1);
         }
 
-        // Q1.3 - Création du client et de la requête HTTP "GET"
+        // Clé API OMDb (remplacez XXXXX par votre clé)
+        String apiKey = "751ea6aa";
+
+        // Création de l'URL de requête à l'API OMDb avec la clé API
+        String omdbUrl = "http://www.omdbapi.com/?apikey=" + apiKey + "&t=Avengers";
+
+        // Création du client HTTP et de la requête GET
         CloseableHttpClient client = HttpClients.createDefault();
-        String url = "http://" + args[0];
-        HttpGet request = new HttpGet(url);
+        HttpGet request = new HttpGet(omdbUrl);
 
-        // Q1.4 - Exécution de la requête HTTP
         try {
-            System.out.println("Executing request " + request.getRequestLine());
-            CloseableHttpResponse resp = client.execute(request);
+            // Exécution de la requête
+            CloseableHttpResponse response = client.execute(request);
+            HttpEntity entity = response.getEntity();
 
-            // Q2.1 - Utilisation d'InputStreamReader directement
-            InputStreamReader isr = new InputStreamReader(resp.getEntity().getContent());
+            // Traitement de la réponse
+            if (entity != null) {
+                InputStream content = entity.getContent();
+                InputStreamReader isr = new InputStreamReader(content);
 
-            // Lire le flux JSON directement avec un parseur JSON (non inclus dans ce code)
+                // Création du lecteur JSON
+                JsonReader reader = Json.createReader(isr);
 
-            resp.close();
+                // Récupération de l'objet JSON principal
+                JsonObject jsonObject = reader.readObject();
+
+                // Fermeture du lecteur JSON et du flux
+                reader.close();
+                isr.close();
+
+                // Accès à la valeur de la clé "Runtime" (durée du film)
+                String runtime = jsonObject.getString("Runtime");
+                System.out.println("Durée du film : " + runtime);
+
+                // Accès à la valeur de la clé "Year" (année de sortie)
+                String year = jsonObject.getString("Year");
+                System.out.println("Année de sortie : " + year);
+            }
+
+            // Fermeture des ressources
+            response.close();
+            client.close();
+
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                client.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 }
