@@ -1,0 +1,7 @@
+1) debsecan | wc -l , 777
+2) debsecan --suite bullseye | wc -l , 777
+3) debsecan --suite bullseye --only-fixed | wc -l , 338
+
+
+2.9) 43
+2.10) 62
