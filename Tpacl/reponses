@@ -1,0 +1,65 @@
+Q 1.1) 
+
+Q 1.2) permissions en octal sont 0644
+
+Q 1.3) Permissions en octal sont 0755
+
+Q 1.4) Masque par défaut : 0022
+
+Q 1.5) Avec la commande umask 123, le umask par défaut n'a pas changé.
+
+Q 1.6) umask 066 / umask 222
+
+
+Q2.1) 
+
+ls -l /boot | grep config-
+
+-rw-r--r-- 1 root root   236435 Sep 29 05:25 config-5.10.0-26-amd64
+-rw-r--r-- 1 root root   236364 Jan 31 21:14 config-5.10.0-28-amd64
+
+Q2.2)
+
+echo /boot/config-$(uname -r)
+
+/boot/config-5.10.0-28-amd64
+
+Q2.3) 
+
+grep -c ACL /boot/config-5.10.0-28-amd64
+
+16 est le nombre d'occurence de cette chaine.
+
+Oui les acl sont activées.
+
+Q2.4) 
+
+sudo tune2fs -l $(df -P / | awk 'NR==2 {print $1}')
+
+Default mount options:    user_xattr acl
+
+Q2.6)
+
+getfacl -R /home
+
+Q2.11)
+
+Non il ne peut pas car il a seulement les droits de lecture.
+
+Q2.13)
+
+Avec la commande sudo setfacl -m u:user2:rwx dbidon/, la commande touch dbidon/aaa en user2 fonctionne.
+
+
+3.1) 
+
+sudo find / -type f -perm /4000 2>/dev/null | wc -l
+
+On en trouve 28.
+
+Pour visualiser les droits de chaque fichier, on peut utiliser la commande : sudo find / -type f -perm /4000 -exec ls -al {} +
+
+3.5)
+
+time(2)
+
